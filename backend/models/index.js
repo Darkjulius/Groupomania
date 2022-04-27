@@ -1,10 +1,11 @@
 //Initialisation de Sequelize à partir du fichier de configuration.
 const config = require("../configuration/config");
+require("dotenv").config();
 
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(config.bd, config.user, config.password, {
-  host: config.host,
-  dialect: config.dialect,
+const sequelize = new Sequelize(process.env.DB_BD, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  dialect: process.env.DB_DIALECT,
 });
 
 const db = {};

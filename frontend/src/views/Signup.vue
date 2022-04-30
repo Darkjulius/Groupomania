@@ -27,9 +27,8 @@
                         <label for="password" class="labelpassword"></label>
                         <input type="password" v-model="inputSignup.password" class="form-control" id="password" placeholder="Mot de passe" autocomplete="off" required>
                     </div>
-                    
                 </form>
-                <div class="row justify-content-center">
+                <div class="button-signup">
                     <button type="submit" @click.prevent="signup" class="btn btn-primary">S'inscrire</button>
                 </div>
             <h3 class="connect">Vous avez déjà un compte ?
@@ -40,7 +39,7 @@
 </template>
 
 <script>
-import barreHeader from "../components/Header.vue";
+import barreHeader from "../components/header/Header.vue";
 
 export default {
     name: 'signupAccount',
@@ -93,16 +92,14 @@ export default {
 <style scoped>
 .container{
     width: 100%;
-    margin: 0 auto;
-    padding: 20px 0;  
+    padding-top: 10px;
 }
 h1{
     font-size: 24px;
-    padding: 20px 0;
+    padding-top: 20px;
 }
 h3{
     font-size: 14px;
-    padding: 20px 0;
 }
 form{
     display: flex;
@@ -111,9 +108,9 @@ form{
     width: 100%;
     margin: 0 auto;
 }
-.form-row, .form-group{
-    width: 332px;
-    align-items: center;
+.form-group{
+    width: 70%;
+    margin: 0 auto;
 }
 .form-control{
     font-size: 17px;
@@ -129,10 +126,24 @@ input{
 .btn-primary{
     background-color: #122442 !important;
     border-color: #122442 !important;
-    width: 332px;
     line-height: 48px;
     font-size: 20px;
     font-weight: bold;
     padding: 0 16px;
+}
+/***** RESPONSIVE *****/
+@media (max-width: 410px) {
+    h1{
+        font-size: 16px
+    }
+    .form-control{
+        font-size: 14px;
+    }
+    .btn-primary{
+        font-size: 14px;
+    }
+    .connect{
+        font-size: 12px;
+    }
 }
 </style>

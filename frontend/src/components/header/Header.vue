@@ -1,6 +1,6 @@
  <template>
     <header>
-        <img src="../assets/icon-left-font-monochrome-white.png" width="240" height="240" alt="logo gropomania" title="logo groupomania" class="logo" />
+        <img src="../../assets/icon-left-font-monochrome-white.png" width="240" height="240" alt="logo gropomania" title="logo groupomania" class="img-fluid" />
     </header>
 </template>
 
@@ -17,7 +17,9 @@ header{
     height: 10vh;
     background-color: #122442;
 }
-.logo{
+.img-fluid{
+    max-width: 100%;
+    height: auto;
     margin: 0 auto;
 }
 </style>

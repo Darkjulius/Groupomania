@@ -3,11 +3,11 @@
         <div> <navbarre /></div>
             <div class="container">
                 <h1>Mon compte</h1>
-                <p>Nom: THIBAUL {{userAccount.lastname}}</p>
-                <p>Prénom: Brice</p>
-                <p>Email: bthibault@gmail.com </p>
-                <p>Vous êtes inscrit depuis le <span> 02/05/2022 </span> en tant que <span>Utilisateur</span></p>
-                <button>Supprimmer mon compte</button>
+                <p><strong>Nom: </strong> {{ lastname }} </p>
+                <p><strong>Prénom: </strong> {{ firstname }}</p>
+                <p><strong>Email: </strong> {{ email }} </p>
+                <p>Vous êtes inscrit depuis le <span><strong> {{ createdAt }} </strong></span>.</p>
+                <button>Supprimer mon compte</button>
             </div>
     </div>
 </template>
@@ -22,21 +22,18 @@ export default {
   },
   data() {
       return {
-          userAccount: {
-              userId: localStorage.getItem("userId"),
-              isAdmin: localStorage.getItem("isAdmin"),
-              firstname: "",
-              lastname: "",
-              email: "",
-              username: "",
-              createdAt: ""
-          },
-          token: localStorage.getItem("token"),
-          userId: localStorage.getItem("userId")
+        firstname: "",
+        lastname: "",
+        email: "",
+        username: "",
+        isAdmin: localStorage.getItem("isAdmin"),
+        userId: localStorage.getItem("userId"),
+        token: localStorage.getItem("token"),
+        createdAt: "",
       };
   },
-  mounted(){
-        let urlAccount = `http://localhost:3000/groupomania/users/accounts/${this.userAccount.userId}`;
+  created(){
+        let urlAccount = `http://localhost:3000/groupomania/users/accounts/${this.userId}`;
         let options = {
             method: "GET",
             headers: {
@@ -49,15 +46,15 @@ export default {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                this.userAccount.firstname = data.firstname;
-                this.userAccount.lastname = data.lastname;
-                this.userAccount.email = data.email;
-                this.userAccount.username = data.username;
-                this.userAccount.isAdmin = data.isAdmin;
-                this.userAccount.createdAt = data.createdAt;
+                this.firstname = data.user.firstname;
+                this.lastname = data.user.lastname;
+                this.email = data.user.email;
+                this.username = data.user.username;
+                this.createdAt = data.user.createdAt;
+                console.log(this.firstname, this.lastname, this.email, this.createdAt);
             })
             .catch((error) => console.log(error));
-  }
+  },
 
-}
+};
 </script>

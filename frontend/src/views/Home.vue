@@ -68,7 +68,6 @@ export default {
           minute: "numeric",
         });
       },
-
     //Suppression d'un article
       destroyArticle(id){
         let urlDeleteArticle = `http://localhost:3000/groupomania/articles/${id}`;

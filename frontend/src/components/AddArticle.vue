@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div><navbarre /></div>
+        <div><Navbarre /></div>
         <h1>Ajoutez un article</h1>
             <form class="article" method="post">
                 <div class="form-group">

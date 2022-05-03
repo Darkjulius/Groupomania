@@ -81,3 +81,12 @@ exports.deleteArticle = (req, res, next) => {
         )
         .catch(error => res.status(400).json({ error }));
 };
+
+// Supprimer un article - Administrateur
+exports.deleteArticleAdmin = (req, res, next) => {
+    Comment.destroy({ where: { articleId: req.params.id } })
+        .then(() => Article.destroy({ where: { id: req.params.id } })
+            .then(() => res.status(200).json({ message: "L'article a été supprimé !!!" }))
+        )
+        .catch(error => res.status(400).json({ error }));
+};

@@ -5,14 +5,15 @@
         <h1>Liste des articles</h1>
         <div v-for="article in articles" v-bind:key="article.id" class="articles">
           <div class="article-user">
-            <p>Publié le : <strong>{{ formatDate(article.createdAt) }}</strong> par <strong> {{article.User.firstname}} {{article.User.lastname}} </strong></p>
+            <p>Publié le : <strong>{{ formatDate(article.createdAt) }}</strong> par <strong> {{article.User.firstname}} {{article.User.lastname}}</strong></p>
           </div>
           <div class="article">
             <p><strong>Titre</strong>: {{ article.title }} </p>
             <p><strong>Description</strong>: {{ article.content }} </p>
           </div>
           <div class="article-delete">
-            <button v-if="article.userId = userId || isAdmin == true" type="button" @click="destroyArticle(article.id)"><span>Supprimer</span></button>
+            <!-- Si l'utilisateur connecté est Administrateur ou Propriétaire de l'article. Il peut faire une suppression  -->
+            <button v-if="userId === article.UserId || isAdmin == true" type="button" @click="destroyArticle(article.id)"><span>Supprimer</span></button>
           </div>
         </div>
       </div>

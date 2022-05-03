@@ -4,12 +4,16 @@
       <div class="container">
         <h1>Liste des articles</h1>
         <div v-for="article in articles" v-bind:key="article.id" class="articles">
-          <div class="articleUser">
-            <p>Publié le : <strong>{{ formatDate(article.createdAt) }}</strong> par <strong> <!-- Régler le problème d'affichage des users --> </strong></p>
+          <div class="article-user">
+            <p>Publié le : <strong>{{ formatDate(article.createdAt) }}</strong> par <strong> {{article.User.firstname}} {{article.User.lastname}} </strong></p>
           </div>
           <div class="article">
+            <p><strong>userId</strong> {{ article.userId }} </p>
             <p><strong>Titre</strong>: {{ article.title }} </p>
             <p><strong>Description</strong>: {{ article.content }} </p>
+          </div>
+          <div class="article-delete">
+            <button v-if="article.userId = userId || isAdmin == true" type="button" @click="destroyArticle(article.id)"><span>Supprimer</span></button>
           </div>
         </div>
       </div>
@@ -54,38 +58,71 @@ export default {
   },
   methods: {
     //Format de la date -> article.createdAt
-     formatDate(date) {
-       return new Date(date).toLocaleDateString("fr-FR", {
-         weekday: "long",
-         year: "numeric",
-         month: "long",
-         day: "numeric",
-         hour: "numeric",
-         minute: "numeric",
-       });
-     },
-  }
+      formatDate(date) {
+        return new Date(date).toLocaleDateString("fr-FR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        });
+      },
+
+    //Suppression d'un article
+      destroyArticle(id){
+        let urlDeleteArticle = `http://localhost:3000/groupomania/articles/${id}`;
+        let options = {
+          method: "DELETE",
+          headers : {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json"
+          },
+        };
+        console.log(options);
+        fetch(urlDeleteArticle, options)
+          .then((response) => {
+            console.log(response);
+            alert("Votre article a été supprimé !!!");
+            window.location.reload();
+          })
+          .catch(error => console.log(error));
+      },
+  },
 };
 </script>
 <style scoped>
-h1{
-    font-size: 24px;
+  h1{
+      font-size: 24px;
+      font-weight: bold;
+      padding: 20px 0;
+  }
+  .articles{
+    width: 80%;
+    margin: 0 auto;
+    text-align: left;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .article p{
+    line-height: 2em;
+  }
+  p{
+    margin: 0;
+  }
+  button{
+    background: #122442;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+  }
+  button:hover{
+    background: #fff;
+  }
+  button:hover span{
+    color: #122442;
     font-weight: bold;
-    padding: 20px 0;
-}
-.articles{
-  width: 80%;
-  margin: 0 auto;
-  text-align: left;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  padding: 20px;
-  margin-bottom: 20px;
-}
-.article p{
-  line-height: 2em;
-}
-p{
-  margin: 0;
-}
-
+  }
 </style>

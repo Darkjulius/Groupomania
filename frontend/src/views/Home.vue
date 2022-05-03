@@ -8,7 +8,6 @@
             <p>Publié le : <strong>{{ formatDate(article.createdAt) }}</strong> par <strong> {{article.User.firstname}} {{article.User.lastname}} </strong></p>
           </div>
           <div class="article">
-            <p><strong>userId</strong> {{ article.userId }} </p>
             <p><strong>Titre</strong>: {{ article.title }} </p>
             <p><strong>Description</strong>: {{ article.content }} </p>
           </div>
@@ -102,6 +101,7 @@ export default {
     margin: 0 auto;
     text-align: left;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
   }

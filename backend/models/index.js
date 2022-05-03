@@ -1,5 +1,3 @@
-//Initialisation de Sequelize à partir du fichier de configuration.
-const config = require("../configuration/config");
 require("dotenv").config();
 
 const Sequelize = require("sequelize");

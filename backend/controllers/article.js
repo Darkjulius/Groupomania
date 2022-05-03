@@ -15,6 +15,7 @@ exports.createArticle = (req, res, next) => {
     // Création d'un nouvel objet article
     const article = new Article({
         ...articleObject,
+        UserId: req.userId
     });
     // Enregistrement de l'objet article dans la base de données
     article.save()

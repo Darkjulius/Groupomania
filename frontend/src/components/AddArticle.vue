@@ -1,9 +1,10 @@
 <template>
     <div id="app">
         <div><navbarre /></div>
+        <h1>Ajoutez un article</h1>
             <form class="article" method="post">
                 <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title"></label>
                     <input 
                     type="text"
                     class="form-control"
@@ -11,10 +12,11 @@
                     required
                     v-model="inputArticle.title"
                     name="title"
+                    placeholder="Saisir un titre"
                     >
                 </div>
                 <div class="form-group">
-                    <label for="content">Contenu</label>
+                    <label for="content"></label>
                     <textarea 
                     type="text"
                     class="form-control"
@@ -22,9 +24,10 @@
                     required
                     v-model="inputArticle.content"
                     name="content"
+                    placeholder="Saisir le contenu de l'article"
                     ></textarea>
                 </div>
-                <button @click="sendArticle" class="btn btn-success">Envoyer</button>
+                <button @click="sendArticle"><span>Envoyer</span></button>
             </form>
     </div>
 </template>
@@ -68,11 +71,43 @@ export default {
             fetch(urlAddArticle, options)
             .then(response => response.json())
             .then(() => {
-                window.location.reload();
                 alert("L'article a été enregistré")
+                this.$router.push("/home");
+                
             })
             .catch(error => console.log(error));
         },
     },
 }
 </script>
+<style scoped>
+  h1{
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px 0;
+  }
+  .article{
+    width: 80%;
+    margin: 0 auto;
+    text-align: left;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  button{
+    background: #122442;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  button:hover{
+    background: #fff;
+  }
+  button:hover span{
+    color: #122442;
+    font-weight: bold;
+  }
+</style>

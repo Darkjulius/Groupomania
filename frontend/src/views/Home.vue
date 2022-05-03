@@ -5,12 +5,11 @@
         <h1>Liste des articles</h1>
         <div v-for="article in articles" v-bind:key="article.id" class="articles">
           <div class="articleUser">
-            <p>Publié le : <strong>{{ formatDate(article.createdAt) }}</strong> par <strong>{{ article.User.firstname }} {{ article.User.lastname }}</strong></p>
+            <p>Publié le : <strong>{{ formatDate(article.createdAt) }}</strong> par <strong> <!-- Régler le problème d'affichage des users --> </strong></p>
           </div>
           <div class="article">
             <p><strong>Titre</strong>: {{ article.title }} </p>
             <p><strong>Description</strong>: {{ article.content }} </p>
-            <p><strong>URL de l'article partagé:</strong>: {{ article.articleUrl }} </p>
           </div>
         </div>
       </div>
@@ -55,16 +54,16 @@ export default {
   },
   methods: {
     //Format de la date -> article.createdAt
-    formatDate(date) {
-      return new Date(date).toLocaleDateString("fr-FR", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      });
-    },
+     formatDate(date) {
+       return new Date(date).toLocaleDateString("fr-FR", {
+         weekday: "long",
+         year: "numeric",
+         month: "long",
+         day: "numeric",
+         hour: "numeric",
+         minute: "numeric",
+       });
+     },
   }
 };
 </script>

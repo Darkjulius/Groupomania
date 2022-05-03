@@ -4,9 +4,6 @@
         <div class="container">
             <h1 class="title">Pour rejoindre la communauté, remplisser le formulaire d'inscription</h1>
                 <form class="form-row" @submit.prevent="signup()" method="post">
-                    <div v-if="error" class="alert alert-danger" role="alert">
-                        {{error}}
-                    </div>
                     <div class="form-group col-md-6">
                         <label for="firstname" class="labeltext"></label>
                         <input type="text" v-model="inputSignup.firstname" class="form-control" id="firstname" placeholder="Prénom" required>
@@ -54,7 +51,6 @@ export default {
                 username: "",
                 email: "",
                 password: "",
-                error: "",
             }
         }
     },

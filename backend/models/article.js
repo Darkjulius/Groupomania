@@ -15,10 +15,6 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       type: Sequelize.TEXT
     },
-    articleUrl: {
-      allowNull: true,
-      type: Sequelize.STRING
-    },
   });
   return Article;
 };

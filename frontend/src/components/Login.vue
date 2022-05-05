@@ -1,35 +1,34 @@
 <template>
-<div id="app">
-    <div><barreHeader /></div>
-        <div class="container">
-            <form class="form-row" @submit.prevent="loginAccount()" method="post">
-                <div class="form-group col-md-6">
-                    <label for="email" class="colorLabel"></label>
-                    <input v-model="inputLogin.email" type="email" class="form-control" id="email" placeholder="Email" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="password" class="colorLabel"></label>
-                    <input v-model="inputLogin.password" type="password" name="password" class="form-control" id="password" placeholder="Mot de passe" autocomplete="off" required>
-                </div>
-                <div class="button-login">
-                    <button @click.prevent="loginAccount()" type="submit" class="btn btn-primary">Se connecter</button>
-                </div>
-                <div class="homeGroupomania">
-                    <h3 class="connect">Vous n'êtes pas encore inscrit ?<router-link to="/signup" class="toConnect" role="button" aria-label="S'incrire">S'inscrire</router-link></h3>
-                </div>
-            </form>
-        </div>
-</div>
-
+    <div id="app">
+        <div><BarreHeader /></div>
+            <div class="container">
+                <form class="form-row" @submit.prevent="loginAccount()" method="post">
+                    <div class="form-group col-md-6">
+                        <label for="email" class="colorLabel"></label>
+                        <input v-model="inputLogin.email" type="email" class="form-control" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="password" class="colorLabel"></label>
+                        <input v-model="inputLogin.password" type="password" name="password" class="form-control" id="password" placeholder="Mot de passe" autocomplete="off" required>
+                    </div>
+                    <div class="button-login">
+                        <button @click.prevent="loginAccount()" type="submit" class="btn btn-primary">Se connecter</button>
+                    </div>
+                    <div class="homeGroupomania">
+                        <h3 class="connect">Vous n'êtes pas encore inscrit ?<router-link to="/signup" class="toConnect" role="button" aria-label="S'incrire">S'inscrire</router-link></h3>
+                    </div>
+                </form>
+            </div>
+    </div>
 </template>
 
 <script>
-import barreHeader from "./header/Header.vue";
+import BarreHeader from "./header/Header.vue";
 
 export default {
     name: 'loginAccount',
     components: {
-    barreHeader,
+    BarreHeader,
     },
     data(){
         return{

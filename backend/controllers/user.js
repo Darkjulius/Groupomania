@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // const { user } = require("../configuration/config");
 const db = require("../models");
+const user = require("../models/user");
 require('dotenv').config();
 
 //Création de nouveaux utilisateurs.
@@ -103,19 +104,18 @@ exports.getOneUser = (req, res, next) => {
 
 //Modifier les informations d'un compte utilisateur
 exports.modifyUser = (req, res, next) => {
-    let firstname = req.body.firstname;
-    let lastname = req.body.lastname;
-    let username = req.body.username;
-    let email = req.body.email;
-
-    //Contrôle que tous les champs du formulaire d'inscription soient saisis.
-    if (firstname === null || firstname === "" || lastname === null || lastname === "" || username === null || username === "" || email === null || email === "") {
-        return res.status(400).json({ "error": "Veuillez remplir l'ensemble des champs du formulaire" });
-    }
-
-    db.User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
-        .then(() => res.status(200).json({ "message": "Le compte utilisateur a été modifié !!!" }))
-        .catch(() => res.status(400).json({ "error": "Impossible de modifier les informations du compte utilisateur" }));
+    db.User.findOne({ where: { id: req.params.id } })
+        .then(() => {
+            db.User.update({
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                username: req.body.username,
+                email: req.body.email,
+            }, { where: { id: req.params.id } })
+                .then(() => res.status(200).json({ "message": "Le compte utilisateur a été mis à jour !!!" }))
+                .catch(() => res.status(400).json({ "error": "Le compte utilisateur n'a pas été mis à jour !!!" }));
+        })
+        .catch(() => res.status(500).json({ "error": "Une erreur est survenue !!!" }))
 };
 
 //Suppression du compte utilisateur et tout ce qui lié avec

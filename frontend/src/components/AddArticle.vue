@@ -72,7 +72,7 @@ export default {
             .then(response => response.json())
             .then(() => {
                 alert("L'article a été enregistré");
-                // this.$router.push("/home");
+                //this.$router.push("/home");
                 window.location.reload();
             })
             .catch(error => console.log(error));

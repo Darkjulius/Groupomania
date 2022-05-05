@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div><navbarre /></div>
+    <div><Navbarre /></div>
       <div class="container">
         <h1>Liste des articles</h1>
         <div v-for="article in articles" v-bind:key="article.id" class="articles">
@@ -11,21 +11,24 @@
             <p><strong>Titre</strong>: {{ article.title }} </p>
             <p><strong>Description</strong>: {{ article.content }} </p>
           </div>
-          <div class="article-delete">
+          <div class="article-actions">
             <!-- Si l'utilisateur connecté est Administrateur ou Propriétaire de l'article. Il peut faire une suppression  -->
-            <button v-if="userId === article.UserId || isAdmin == true" type="button" @click="destroyArticle(article.id)"><span>Supprimer</span></button>
+            <button v-if="userId === article.UserId || isAdmin == true" type="button" @click="destroyArticle(article.id)" class="button-article"><span>Supprimer</span></button>
           </div>
         </div>
       </div>
+    <div><Footer /></div>
   </div>
 </template>
 
 <script>
 import Navbarre from "../components/header/HeaderApp.vue"
+import Footer from "../components/Footer.vue"
 export default {
   name: "allArticles",
   components: {
     Navbarre,
+    Footer
   },
   data() {
     return {
@@ -95,6 +98,12 @@ export default {
       font-size: 24px;
       font-weight: bold;
       padding: 20px 0;
+  }
+  .container{
+    height: 100vh;
+  }
+  .button-article{
+    margin-right: 10px;
   }
   .articles{
     width: 80%;

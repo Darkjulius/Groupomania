@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
+const authAdmin = require("../middleware/auth-admin");
 
 const userCtrl = require("../controllers/user");
 const validMail = require("../middleware/valid-email");

@@ -1,12 +1,14 @@
 const db = require("../models");
 const Comment = db.Comment;
 
-// Créer un commentaire sur un Post
+// Créer un commentaire sur un Article
 exports.createComment = (req, res, next) => {
     const commentObject = req.body;
     // Création d'un nouvel objet commentaire
     const comment = new Comment({
-        ...commentObject
+        ...commentObject,
+        UserId: req.userId,
+        ArticleId: req.params.articleId
     });
     // Enregistrement de l'objet commentaire dans la base de données
     comment.save()
@@ -22,7 +24,7 @@ exports.createComment = (req, res, next) => {
                         attributes: ["firstname", "lastname", "username", "email"],
                     }
                 ],
-                where: { articleId: req.body.ArticleId }
+                where: { ArticleId: req.body.articleId }
             })
                 .then((comments) => { res.status(200).json(comments) });
         })
@@ -43,7 +45,7 @@ exports.getAllComments = (req, res, next) => {
             },
             {
                 model: db.Article,
-                attributes: ["title", "content", "articleURL"]
+                attributes: ["title", "content"]
             }
         ]
     })
@@ -61,7 +63,7 @@ exports.getOneComment = (req, res, next) => {
             },
             {
                 model: db.Article,
-                attributes: ["title", "content", "articleURL"]
+                attributes: ["title", "content"]
             }
         ],
         where: { id: req.params.id }

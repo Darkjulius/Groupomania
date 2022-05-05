@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div><barreHeader /></div>
+        <div><BarreHeader /></div>
         <div class="container">
             <h1 class="title">Pour rejoindre la communauté, remplisser le formulaire d'inscription</h1>
                 <form class="form-row" @submit.prevent="signup()" method="post">
@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import barreHeader from "../components/header/Header.vue";
+import BarreHeader from "../components/header/Header.vue";
 
 export default {
     name: 'signupAccount',
     components: {
-    barreHeader,
+    BarreHeader,
     },
     data(){
         return{

@@ -7,6 +7,16 @@ const routes = [
     component: () => import('../components/Login')
   },
   {
+    path: '/add',
+    name: 'add',
+    component: () => import('../components/AddArticle')
+  },
+  {
+    path: '/modifAccount',
+    name: 'modifAccount',
+    component: () => import('../components/ModifyAccount')
+  },
+  {
     path: '/signup',
     name: 'signup',
     component: () => import('../views/Signup')
@@ -21,11 +31,7 @@ const routes = [
     name: 'account',
     component: () => import('../views/Account')
   },
-  {
-    path: '/add',
-    name: 'add',
-    component: () => import('../components/AddArticle')
-  }
+
 ]
 
 const router = createRouter({

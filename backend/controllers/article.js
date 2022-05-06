@@ -59,18 +59,16 @@ exports.getOneArticle = (req, res, next) => {
 
 // Modifier un article
 exports.modifyArticle = (req, res, next) => {
-    // vérification que tous les champs sont remplis
-    const title = req.body.title;
-    const content = req.body.content;
-    if (title === null || title === "" || content === null || content === "") {
-        return res.status(400).json({ "error": "Veuillez remplir les champs TITRE et CONTENU pour mettre à jour un article" });
-    }
-
-    const articleObject = req.body;
-
-    Article.update({ ...articleObject, id: req.params.id }, { where: { id: req.params.id } })
-        .then(() => res.status(200).json({ "message": "L'article a été modifié !!!" }))
-        .catch(() => res.status(400).json({ "error": "Impossible de mettre à jour l'article !!!" }));
+    db.Article.findOne({ where: { id: req.params.id } })
+        .then(() => {
+            db.Article.update({
+                title: req.body.title,
+                content: req.body.content,
+            }, { where: { id: req.params.id } })
+                .then(() => res.status(200).json({ "message": "L'article a été mis à jour !!!" }))
+                .catch(() => res.status(400).json({ "error": "L'article n'a pas été mis à jour !!!" }));
+        })
+        .catch(() => res.status(500).json({ "error": "Une erreur est survenue !!!" }))
 };
 
 // Supprimer un article

@@ -7,6 +7,7 @@
                 <p><strong>Prénom: </strong> {{ firstname }}</p>
                 <p><strong>Email: </strong> {{ email }} </p>
                 <p>Vous êtes inscrit depuis le <span><strong> {{ formatDate(createdAt) }} </strong></span>.</p>
+                <p>Dernière mise à jour du compte le <span><strong> {{ formatDate(updatedAt) }} </strong></span>.</p>
                 <router-link to="/modifAccount" class="button" role="button"><button><span>Modifier</span></button></router-link>
                 <button @click="deleteAccount"><span>Supprimer</span></button>
             </div>
@@ -31,6 +32,7 @@ export default {
             userId: localStorage.getItem("userId"),
             token: localStorage.getItem("token"),
             createdAt: "",
+            updatedAt: "",
         };
     },
     created(){
@@ -52,7 +54,8 @@ export default {
                 this.email = data.user.email;
                 this.username = data.user.username;
                 this.createdAt = data.user.createdAt;
-                console.log(this.firstname, this.lastname, this.email, this.createdAt);
+                this.updatedAt = data.user.updatedAt;
+                console.log(this.firstname, this.lastname, this.email, this.createdAt, this.updatedAt);
             })
             .catch((error) => console.log(error));
     },
@@ -106,6 +109,9 @@ export default {
         border-radius: 10px;
         padding: 20px;
         margin-bottom: 20px;
+    }
+    .button{
+        margin-right: 10px
     }
     button{
         background: #122442;

@@ -2,26 +2,18 @@
 <div id="app">
         <div><Navbarre /></div>
         <div class="container">
-            <h1 class="title">Mise à jour du compte</h1>
+            <h1 class="title">Mise à jour de l'article</h1>
                 <form class="form-row" method="post">
                     <div class="form-group col-md-6">
-                        <label for="firstname" class="labeltext"></label>
-                        <input type="text" v-model="inputModify.firstname" class="form-control" id="firstname" placeholder="Prénom" required>
+                        <label for="title" class="labeltext"></label>
+                        <input type="text" v-model="inputModify.title" class="form-control" id="title" placeholder="Titre" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="lastname" class="labeltext"></label>
-                        <input type="text" v-model="inputModify.lastname" class="form-control" id="lastname" placeholder="Nom" required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="username" class="labeltext"></label>
-                        <input type="text" v-model="inputModify.username" class="form-control" id="username" placeholder="Pseudo" required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="email" class="labelemail"></label>
-                        <input type="email" v-model="inputModify.email" class="form-control" id="email" placeholder="Adresse e-mail" required>
+                        <label for="content" class="labeltext"></label>
+                        <input type="text" v-model="inputModify.content" class="form-control" id="content" placeholder="Contenu" required>
                     </div>
                 </form>
-                <div class="button-update">
+                <div class="buttons">
                     <button type="submit" @click.prevent="modify" class="btn btn-primary">Mettre à jour</button>
                 </div>
         </div>
@@ -32,17 +24,15 @@
 import Navbarre from "../components/header/HeaderApp.vue"
 
 export default {
-    name: "gestionAccount",
+    name: "gestionArticle",
     components: {
     Navbarre,
     },
     data() {
         return {
             inputModify: {
-                firstname: "",
-                lastname: "",
-                username: "",
-                email: "",
+                title: "",
+                content: "",
             },
             isAdmin: localStorage.getItem("isAdmin"),
             userId: localStorage.getItem("userId"),
@@ -50,15 +40,13 @@ export default {
         };
     },
     methods: {
-        modify(){
+        modify(id){
             let inputDatas = {
-                firstname: this.inputModify.firstname,
-                lastname: this.inputModify.lastname,
-                username: this.inputModify.username,
-                email: this.inputModify.email,
+                title: this.inputModify.title,
+                content: this.inputModify.content,
             };
             console.log(inputDatas);
-            let urlModify = `http://localhost:3000/groupomania/users/accounts/${this.userId}`;
+            let urlModify = `http://localhost:3000/groupomania/articles/${id}`;
             let options = {
                 method: "PUT",
                 body: JSON.stringify(inputDatas),
@@ -72,7 +60,7 @@ export default {
                 .then(response => response.json())
                 .then((response) =>{
                     console.log(response);
-                    this.$router.push("/account");
+                    this.$router.push("/home");
                     alert("La mise à jour de votre compte a été effectuée !!!");
                 })
                 .catch((error) => console.log(error));

@@ -12,23 +12,21 @@
             <p><strong>Description</strong>: {{ article.content }} </p>
           </div>
           <div class="article-actions">
+            <router-link to="/modifArticle" v-if="userId === article.UserId || isAdmin == true" class="button" role="button"><button><span>Modifier</span></button></router-link>
             <!-- Si l'utilisateur connecté est Administrateur ou Propriétaire de l'article. Il peut faire une suppression  -->
             <button v-if="userId === article.UserId || isAdmin == true" type="button" @click="destroyArticle(article.id)" class="button-article"><span>Supprimer</span></button>
           </div>
         </div>
       </div>
-    <div><Footer /></div>
   </div>
 </template>
 
 <script>
 import Navbarre from "../components/header/HeaderApp.vue"
-import Footer from "../components/Footer.vue"
 export default {
   name: "allArticles",
   components: {
     Navbarre,
-    Footer
   },
   data() {
     return {
@@ -119,6 +117,9 @@ export default {
   }
   p{
     margin: 0;
+  }
+  .button{
+    margin-right: 10px;
   }
   button{
     background: #122442;

@@ -92,7 +92,7 @@ exports.getAllUsers = (req, res, next) => {
 //Afficher les informations d'un compte utilisateur via son id
 exports.getOneUser = (req, res, next) => {
     db.User.findOne({
-        attributes: ["firstname", "lastname", "username", "email", "isAdmin", "createdAt"],
+        attributes: ["firstname", "lastname", "username", "email", "isAdmin", "createdAt", "updatedAt"],
         where: { id: req.params.id }
     })
         .then(user => {

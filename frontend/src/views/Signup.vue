@@ -3,7 +3,7 @@
         <div><BarreHeader /></div>
         <div class="container">
             <h1 class="title">Pour rejoindre la communauté, remplisser le formulaire d'inscription</h1>
-                <form class="form-row" @submit.prevent="signup()" method="post">
+                <form class="form-row" method="post">
                     <div class="form-group col-md-6">
                         <label for="firstname" class="labeltext"></label>
                         <input type="text" v-model="inputSignup.firstname" class="form-control" id="firstname" placeholder="Prénom" required>
@@ -37,7 +37,6 @@
 
 <script>
 import BarreHeader from "../components/header/Header.vue";
-
 export default {
     name: 'signupAccount',
     components: {
@@ -51,7 +50,7 @@ export default {
                 username: "",
                 email: "",
                 password: "",
-            }
+            },
         }
     },
     methods: {
@@ -64,6 +63,24 @@ export default {
                 password: this.inputSignup.password,
             }
             console.log(inputDatas);
+
+            //Contrôle que tous les champs du formulaire d'inscription doivent être remplis.
+            if(inputDatas.firstname == "" || inputDatas.lastname === "" || inputDatas.username === "") {
+                return alert("Veuillez remplir tous les champs du formulaire !!!")
+            }
+
+            //Contrôle du mot de passe saisi dans le formulaire d'inscription.
+            let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+            if (!passwordRegex.test(this.password)) {
+                return alert("Le mot de passe n'est pas valide doit comporter 8 à 20 caractères et inclure au moins 1 chiffre");
+            }
+
+            //Contrôle de l'email saisi dans le formulaire d'inscription.
+            let emailRegexp = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+            if (!emailRegexp.test(this.email)){
+                return alert("Le format de l'email n'est pas valide")
+            }
+
             let urlSignup = "http://localhost:3000/groupomania/users/auth/signup"
             let options = {
                 method: "POST",

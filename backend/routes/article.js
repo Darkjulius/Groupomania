@@ -11,5 +11,4 @@ router.put("/:id", auth, articleCtrl.modifyArticle);                      //Modi
 router.delete("/:id", auth, articleCtrl.deleteArticle);                   //Suppression d'un article via son id (propriétaire).
 router.delete("/admin/:id", authAdmin, articleCtrl.deleteArticleAdmin)    //Suppression d'un article (administrateur).  
 
-
 module.exports = router;

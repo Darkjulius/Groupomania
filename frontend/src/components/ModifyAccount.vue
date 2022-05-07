@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Navbarre from "../components/header/HeaderApp.vue"
+import Navbarre from "./header/HeaderApp.vue"
 
 export default {
     name: "gestionAccount",

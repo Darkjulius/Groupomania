@@ -36,14 +36,14 @@ exports.signup = (req, res, next) => {
                             isAdmin: 0
                         })
                             .then(() => res.status(201).json({ "message": "Le compte utilisateur a été créé !!!" }))
-                            .catch(() => res.status(400).json({ "error": "Le compte utilisateur n'a pas été créé !!!" }));
+                            .catch(() => res.status(400).json({ error: "Le compte utilisateur n'a pas été créé !!!" }));
                     })
-                    .catch(() => res.status(500).json({ "error": "Impossible de créer le compte utilisateur !!!" }));
+                    .catch(() => res.status(500).json({ error: "Impossible de créer le compte utilisateur !!!" }));
             } else {
-                return res.status(404).json({ "error": "Le compte utilisateur est déjà existant en BDD !!!" });
+                return res.status(404).json({ error: "Le compte utilisateur est déjà existant en BDD !!!" });
             }
         })
-        .catch(() => res.status(500).json({ "error": "Une erreur est survenue !!!" }));
+        .catch(() => res.status(500).json({ error: "Une erreur est survenue !!!" }));
 };
 
 //Connexion d'un compte utilisateur
@@ -118,8 +118,19 @@ exports.modifyUser = (req, res, next) => {
         .catch(() => res.status(500).json({ "error": "Une erreur est survenue !!!" }))
 };
 
-//Suppression du compte utilisateur et tout ce qui lié avec
+//Suppression du compte utilisateur
 exports.deleteUser = (req, res, next) => {
+    db.User.findOne({ where: { id: req.params.id } })
+        .then(() => {
+            db.User.destroy({ where: { id: req.params.id } })
+                .then(() => res.status(200).json({ "message": "Le compte utilisateur a été supprimé !!!" }))
+                .catch(() => res.status(400).json({ "error": "Le compte utilisateur n'a pas été supprimé !!!" }));
+        })
+        .catch(() => res.status(500).json({ "error": "Une erreur est survenue !!!" }))
+};
+
+//Suppression du compte utilisateur - Administrateur
+exports.deleteUserAdmin = (req, res, next) => {
     db.User.findOne({ where: { id: req.params.id } })
         .then(() => {
             db.User.destroy({ where: { id: req.params.id } })

@@ -37,7 +37,7 @@ exports.getAllArticles = (req, res, next) => {
             }
         ]
     })
-        .then(articles => { console.log(articles); res.status(200).json({ data: articles }); })
+        .then(articles => { console.log(articles); res.status(200).json({ data: articles }) })
         .catch(error => res.status(400).json({ error }));
 };
 

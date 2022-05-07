@@ -12,7 +12,16 @@
             <p><strong>Description</strong>: {{ article.content }} </p>
           </div>
           <div class="article-actions">
-            <router-link to="/modifArticle" v-if="userId === article.UserId || isAdmin == true" class="button" role="button"><button><span>Modifier</span></button></router-link>
+            <!-- <router-link to="/modifArticle" v-if="userId === article.UserId || isAdmin == true" id="modifArticle" class="button" role="button"><button><span>Modifier</span></button></router-link> -->
+            <button v-if="userId === article.UserId || isAdmin == true"
+                    @click="toggleModale"
+                    type="button" 
+                    class="button-article"><span>Modifier</span>></button>
+
+            <Modale v-bind:revele="revele"
+                    v-bind:toggleModale="toggleModale"
+                    v-bind:modifyArticle="modifyArticle"></Modale>
+
             <!-- Si l'utilisateur connecté est Administrateur ou Propriétaire de l'article. Il peut faire une suppression  -->
             <button v-if="userId === article.UserId || isAdmin == true" type="button" @click="destroyArticle(article.id)" class="button-article"><span>Supprimer</span></button>
           </div>
@@ -23,22 +32,25 @@
 
 <script>
 import Navbarre from "../components/header/HeaderApp.vue"
+import ModaleArticle from "../components/ModaleModifyArticle.vue"
 export default {
   name: "allArticles",
   components: {
     Navbarre,
+    "Modale": ModaleArticle,
   },
   data() {
     return {
       userId: "",
       isAdmin: "",
       articles: [],
+      revele: false,
     };
   },
   created() {
     this.userId = JSON.parse(localStorage.getItem("userId"));
     this.isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
-    console.log(localStorage);
+    console.log(localStorage, "ligne43");
     
     let urlAllArticles = "http://localhost:3000/groupomania/articles";
     let options = {
@@ -53,7 +65,7 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         this.articles = [...data.data];
-        console.log(this.articles);
+        console.log(this.articles,"ligne56");
       })
       .catch((error) => console.log(error));
   },
@@ -69,6 +81,33 @@ export default {
           minute: "numeric",
         });
       },
+
+      //Affiche la ModaleArticle lors du Click sur le bouton Modifier.
+      toggleModale: function(){
+        this.revele = !this.revele
+      },
+
+    //Modification d'un article
+      modifyArticle(id){
+        let urlModify = `http://localhost:3000/groupomania/articles/${id}`;
+        let options = {
+          method: "PUT",
+          headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+              "Content-Type": "application/json"
+          },
+        };
+        console.log(options);
+        fetch(urlModify, options)
+          .then(response => response.json())
+          .then((response) =>{
+              console.log(response);
+              this.$router.push("/home");
+              alert("Votre article a été modifié !!!");
+          })
+          .catch((error) => console.log(error));
+      },
+
     //Suppression d'un article
       destroyArticle(id){
         let urlDeleteArticle = `http://localhost:3000/groupomania/articles/${id}`;

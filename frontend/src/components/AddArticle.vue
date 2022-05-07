@@ -44,7 +44,7 @@ export default {
                 title: "",
                 content: ""
             },
-            userId: ""
+            userId: "",
         };
     },
     mounted() {

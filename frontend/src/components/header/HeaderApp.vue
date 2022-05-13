@@ -1,4 +1,5 @@
 <template>
+<!-- Header de l'application à la connexion. -->
     <header>
         <nav class="navbarre">
             <router-link to="/home" class="router-link"><li class="item-nav">Accueil</li></router-link>
@@ -15,7 +16,7 @@ export default {
     methods: {
         disconnect(){
             localStorage.clear();
-            this.$router.push("/");
+            window.location.href="/signup";
         },
     },
 };

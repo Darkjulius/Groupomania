@@ -4,25 +4,57 @@
         <div class="container">
             <h1 class="title">Mise à jour du compte</h1>
                 <form class="form-row" method="post">
+
                     <div class="form-group col-md-6">
                         <label for="firstname" class="labeltext"></label>
-                        <input type="text" v-model="inputModify.firstname" class="form-control" id="firstname" placeholder="Prénom" required>
+                        <input 
+                        type="text" 
+                        v-model="inputModify.firstname" 
+                        class="form-control" 
+                        id="firstname" 
+                        placeholder="Prénom" 
+                        required>
                     </div>
+
                     <div class="form-group col-md-6">
                         <label for="lastname" class="labeltext"></label>
-                        <input type="text" v-model="inputModify.lastname" class="form-control" id="lastname" placeholder="Nom" required>
+                        <input 
+                        type="text" 
+                        v-model="inputModify.lastname" 
+                        class="form-control" 
+                        id="lastname" 
+                        placeholder="Nom" 
+                        required>
                     </div>
+
                     <div class="form-group col-md-6">
                         <label for="username" class="labeltext"></label>
-                        <input type="text" v-model="inputModify.username" class="form-control" id="username" placeholder="Pseudo" required>
+                        <input 
+                        type="text" 
+                        v-model="inputModify.username" 
+                        class="form-control" 
+                        id="username" 
+                        placeholder="Pseudo" 
+                        required>
                     </div>
+
                     <div class="form-group col-md-6">
                         <label for="email" class="labelemail"></label>
-                        <input type="email" v-model="inputModify.email" class="form-control" id="email" placeholder="Adresse e-mail" required>
+                        <input type="email" 
+                        v-model="inputModify.email" 
+                        class="form-control" 
+                        id="email" 
+                        placeholder="Adresse e-mail" 
+                        required>
                     </div>
+
                 </form>
+
                 <div class="button-update">
-                    <button type="submit" @click.prevent="modify" class="btn btn-primary">Mettre à jour</button>
+                    <button 
+                    type="submit" 
+                    @click.prevent="modify" 
+                    class="btn btn-primary">Mettre à jour</button>
                 </div>
         </div>
     </div>
@@ -72,7 +104,7 @@ export default {
                 .then(response => response.json())
                 .then((response) =>{
                     console.log(response);
-                    this.$router.push("/account");
+                    window.location.href="/account";
                     alert("La mise à jour de votre compte a été effectuée !!!");
                 })
                 .catch((error) => console.log(error));
@@ -80,6 +112,7 @@ export default {
     }
 };
 </script>
+
 <style scoped>
 .container{
     width: 100%;

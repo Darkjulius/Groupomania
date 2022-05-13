@@ -1,4 +1,5 @@
- <template>
+<template>
+  <!-- <Header de Home.vue et Signup.vue -->
     <header>
         <img src="../../assets/icon-left-font-monochrome-white.png" width="240" height="240" alt="logo gropomania" title="logo groupomania" class="img-fluid" />
     </header>

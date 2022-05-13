@@ -3,20 +3,41 @@
         <div><BarreHeader /></div>
             <div class="container">
                 <form class="form-row" @submit.prevent="loginAccount()" method="post">
+
                     <div class="form-group col-md-6">
                         <label for="email" class="colorLabel"></label>
-                        <input v-model="inputLogin.email" type="email" class="form-control" id="email" placeholder="Email" required>
+                        <input 
+                        v-model="inputLogin.email" 
+                        type="email" 
+                        class="form-control" 
+                        id="email" 
+                        placeholder="Email" 
+                        required>
                     </div>
+
                     <div class="form-group col-md-6">
                         <label for="password" class="colorLabel"></label>
-                        <input v-model="inputLogin.password" type="password" name="password" class="form-control" id="password" placeholder="Mot de passe" autocomplete="off" required>
+                        <input 
+                        v-model="inputLogin.password" 
+                        type="password" 
+                        name="password" 
+                        class="form-control" 
+                        id="password" 
+                        placeholder="Mot de passe" 
+                        autocomplete="off" 
+                        required>
                     </div>
+
                     <div class="button-login">
                         <button @click.prevent="loginAccount()" type="submit" class="btn btn-primary">Se connecter</button>
                     </div>
+
                     <div class="homeGroupomania">
-                        <h3 class="connect">Vous n'êtes pas encore inscrit ?<router-link to="/signup" class="toConnect" role="button" aria-label="S'incrire">S'inscrire</router-link></h3>
+                        <h3 class="connect">Vous n'êtes pas encore inscrit ?
+                            <router-link to="/signup" class="toConnect" role="button" aria-label="S'incrire"><div class="login">S'inscrire</div></router-link>
+                        </h3>
                     </div>
+
                 </form>
             </div>
     </div>
@@ -42,10 +63,16 @@ export default {
     methods:{
         loginAccount(){
             let loginDatas = {
-                "email": this.inputLogin.email,
-                "password": this.inputLogin.password,
+                email: this.inputLogin.email,
+                password: this.inputLogin.password,
             }
             console.log(loginDatas);
+
+            //Contrôle que tous les champs du formulaire de connexion doivent être remplis.
+            if(loginDatas.email == "" || loginDatas.password === "") {
+                return alert("Veuillez remplir tous les champs du formulaire !!!")
+            }
+
             let urlLogin = "http://localhost:3000/groupomania/users/auth/login"
             let options = {
                 method: "POST",
@@ -53,7 +80,6 @@ export default {
                 headers: {
                     "Content-Type": "application/json"
                 }
-                    
             }
             fetch(urlLogin, options)
             .then(response => response.json())
@@ -114,10 +140,13 @@ input{
 .connect{
     font-size: 14px;
 }
+.login{
+    margin-top: 10px;
+}
 /***** RESPONSIVE *****/
-@media (max-width: 320px) {
+@media (max-width: 335px) {
     .form-control{
-        font-size: 14px;
+        font-size: 14px !important;
     }
     .btn-primary{
         font-size: 14px;

@@ -3,33 +3,61 @@
         <div><BarreHeader /></div>
         <div class="container">
             <h1 class="title">Pour rejoindre la communauté, remplisser le formulaire d'inscription</h1>
-                <form class="form-row" method="post">
+                <form class="form-row" @submit.prevent="signup()" method="post">
                     <div class="form-group col-md-6">
-                        <label for="firstname" class="labeltext"></label>
-                        <input type="text" v-model="inputSignup.firstname" class="form-control" id="firstname" placeholder="Prénom" required>
+                        <label  for="firstname" class="labeltext"></label>
+                        <input  type="text" 
+                                v-model="inputSignup.firstname"
+                                class="form-control"
+                                id="firstname"
+                                placeholder="Prénom"
+                                required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="lastname" class="labeltext"></label>
-                        <input type="text" v-model="inputSignup.lastname" class="form-control" id="lastname" placeholder="Nom" required>
+                        <label  for="lastname" class="labeltext"></label>
+                        <input  type="text"
+                                v-model="inputSignup.lastname"
+                                class="form-control"
+                                id="lastname"
+                                placeholder="Nom"
+                                required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="username" class="labeltext"></label>
-                        <input type="text" v-model="inputSignup.username" class="form-control" id="username" placeholder="Pseudo" required>
+                        <label  for="username" class="labeltext"></label>
+                        <input  type="text"
+                                v-model="inputSignup.username"
+                                class="form-control"
+                                id="username"
+                                placeholder="Pseudo"
+                                required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="email" class="labelemail"></label>
-                        <input type="email" v-model="inputSignup.email" class="form-control" id="email" placeholder="Adresse e-mail" required>
+                        <label  for="email" class="labelemail"></label>
+                        <input  type="email"
+                                v-model="inputSignup.email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                placeholder="Adresse e-mail"
+                                required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="password" class="labelpassword"></label>
-                        <input type="password" v-model="inputSignup.password" class="form-control" id="password" placeholder="Mot de passe" autocomplete="off" required>
+                        <label  for="password" class="labelpassword"></label>
+                        <input  type="password"
+                                v-model="inputSignup.password"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                placeholder="Mot de passe"
+                                autocomplete="off"
+                                required>
                     </div>
                 </form>
                 <div class="button-signup">
                     <button type="submit" @click.prevent="signup" class="btn btn-primary">S'inscrire</button>
                 </div>
             <h3 class="connect">Vous avez déjà un compte ?
-            <router-link to="/" class="toconnect" role="button" aria-label="se connecter">Se connecter</router-link>
+            <router-link to="/" class="toconnect" role="button" aria-label="se connecter"><div class="signup">Se connecter</div></router-link>
             </h3>
         </div>
     </div>
@@ -37,6 +65,7 @@
 
 <script>
 import BarreHeader from "../components/header/Header.vue";
+
 export default {
     name: 'signupAccount',
     components: {
@@ -69,16 +98,18 @@ export default {
                 return alert("Veuillez remplir tous les champs du formulaire !!!")
             }
 
-            //Contrôle du mot de passe saisi dans le formulaire d'inscription.
-            let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-            if (!passwordRegex.test(this.password)) {
-                return alert("Le mot de passe n'est pas valide doit comporter 8 à 20 caractères et inclure au moins 1 chiffre");
+            //Contrôle de l'email saisi dans le formulaire d'inscription.
+            let email = document.getElementById("email");
+            let emailRegexp = new RegExp('^[a-zA-Z0-9_.-]+@{1}[a-zA-Z0-9-]+[.]{1}[a-zA-Z0-9-.]{2,10}$');
+            if (!emailRegexp.test(email.value)){
+                  return alert("Le format de l'email n'est pas valide")
             }
 
-            //Contrôle de l'email saisi dans le formulaire d'inscription.
-            let emailRegexp = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
-            if (!emailRegexp.test(this.email)){
-                return alert("Le format de l'email n'est pas valide")
+            //Contrôle du passsword saisi dans le formulaire d'inscription.
+            let password = document.getElementById("password");
+            let passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,20}$');
+            if (!passwordRegex.test(password.value)){
+                return alert("Le mot de passe n'est pas valide doit comporter 8 à 20 caractères et inclure au moins 1 majuscule, 1 minuscule et 1 chiffre")
             }
 
             let urlSignup = "http://localhost:3000/groupomania/users/auth/signup"
@@ -93,7 +124,7 @@ export default {
             fetch(urlSignup, options)
             .then(response => response.json())
             .then(() =>{
-                this.$router.push("/");
+                window.location.href="/";
                 alert("Bienvenue sur Groupomania. Votre compte a été créé donc vous pouvez vous connecter à présent !!!");
             })
             .catch(error => console.log(error));
@@ -144,8 +175,11 @@ input{
     font-weight: bold;
     padding: 0 16px;
 }
+.signup{
+    margin-top: 10px;
+}
 /***** RESPONSIVE *****/
-@media (max-width: 410px) {
+@media (max-width: 406px) {
     h1{
         font-size: 16px
     }

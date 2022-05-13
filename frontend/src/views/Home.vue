@@ -8,20 +8,10 @@
             <p>Publié le : <strong>{{ formatDate(article.createdAt) }}</strong> par <strong> {{article.User.firstname}} {{article.User.lastname}}</strong></p>
           </div>
           <div class="article">
-            <p><strong>Titre</strong>: {{ article.title }} </p>
-            <p><strong>Description</strong>: {{ article.content }} </p>
+            <p><strong>Titre</strong>: {{ article.title }}</p>
+            <p><strong>Description</strong>: {{ article.content }}</p>
           </div>
-          <div class="article-actions">
-            <!-- <router-link to="/modifArticle" v-if="userId === article.UserId || isAdmin == true" id="modifArticle" class="button" role="button"><button><span>Modifier</span></button></router-link> -->
-            <button v-if="userId === article.UserId || isAdmin == true"
-                    @click="toggleModale"
-                    type="button" 
-                    class="button-article"><span>Modifier</span>></button>
-
-            <Modale v-bind:revele="revele"
-                    v-bind:toggleModale="toggleModale"
-                    v-bind:modifyArticle="modifyArticle"></Modale>
-
+          <div class="center">
             <!-- Si l'utilisateur connecté est Administrateur ou Propriétaire de l'article. Il peut faire une suppression  -->
             <button v-if="userId === article.UserId || isAdmin == true" type="button" @click="destroyArticle(article.id)" class="button-article"><span>Supprimer</span></button>
           </div>
@@ -32,25 +22,24 @@
 
 <script>
 import Navbarre from "../components/header/HeaderApp.vue"
-import ModaleArticle from "../components/ModaleModifyArticle.vue"
+import dayjs from "dayjs"
+
 export default {
   name: "allArticles",
   components: {
     Navbarre,
-    "Modale": ModaleArticle,
   },
   data() {
     return {
       userId: "",
       isAdmin: "",
       articles: [],
-      revele: false,
     };
   },
   created() {
     this.userId = JSON.parse(localStorage.getItem("userId"));
     this.isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
-    console.log(localStorage, "ligne43");
+    console.log(localStorage);
     
     let urlAllArticles = "http://localhost:3000/groupomania/articles";
     let options = {
@@ -65,47 +54,15 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         this.articles = [...data.data];
-        console.log(this.articles,"ligne56");
+        console.log(this.articles);
       })
       .catch((error) => console.log(error));
   },
   methods: {
     //Format de la date -> article.createdAt
-      formatDate(date) {
-        return new Date(date).toLocaleDateString("fr-FR", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-        });
-      },
-
-      //Affiche la ModaleArticle lors du Click sur le bouton Modifier.
-      toggleModale: function(){
-        this.revele = !this.revele
-      },
-
-    //Modification d'un article
-      modifyArticle(id){
-        let urlModify = `http://localhost:3000/groupomania/articles/${id}`;
-        let options = {
-          method: "PUT",
-          headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-              "Content-Type": "application/json"
-          },
-        };
-        console.log(options);
-        fetch(urlModify, options)
-          .then(response => response.json())
-          .then((response) =>{
-              console.log(response);
-              this.$router.push("/home");
-              alert("Votre article a été modifié !!!");
-          })
-          .catch((error) => console.log(error));
+      formatDate(dateString) {
+        const date = dayjs(dateString);
+        return date.format('D/MM/YYYY à hh:mm')
       },
 
     //Suppression d'un article
@@ -139,9 +96,6 @@ export default {
   .container{
     height: 100vh;
   }
-  .button-article{
-    margin-right: 10px;
-  }
   .articles{
     width: 80%;
     margin: 0 auto;
@@ -157,9 +111,6 @@ export default {
   p{
     margin: 0;
   }
-  .button{
-    margin-right: 10px;
-  }
   button{
     background: #122442;
     border-radius: 10px;
@@ -174,4 +125,14 @@ export default {
     color: #122442;
     font-weight: bold;
   }
+/***** RESPONSIVE *****/
+@media (max-width: 535px) {
+    p{
+      font-size: 14px
+    }
+    .center{
+      display: flex;
+      justify-content: center;
+    }
+}
 </style>

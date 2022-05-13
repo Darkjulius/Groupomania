@@ -3,6 +3,7 @@
         <div><Navbarre /></div>
         <h1>Ajoutez un article</h1>
             <form class="article" method="post">
+
                 <div class="form-group">
                     <label for="title"></label>
                     <input 
@@ -15,6 +16,7 @@
                     placeholder="Saisir un titre"
                     >
                 </div>
+
                 <div class="form-group">
                     <label for="content"></label>
                     <textarea 
@@ -27,10 +29,13 @@
                     placeholder="Saisir le contenu de l'article"
                     ></textarea>
                 </div>
+
                 <button @click="sendArticle"><span>Envoyer</span></button>
+                
             </form>
     </div>
 </template>
+
 <script>
 import Navbarre from "../components/header/HeaderApp.vue"
 export default {
@@ -54,11 +59,17 @@ export default {
     methods: {
         sendArticle() {
             let data = {
-                "title": this.inputArticle.title,
-                "content": this.inputArticle.content,
-                "userId": this.userId
+                title: this.inputArticle.title,
+                content: this.inputArticle.content,
+                userId: this.userId
             };
             console.log(data);
+
+            //Contrôle que tous les champs du formulaire d'inscription doivent être remplis.
+            if(data.title == "" || data.content === "") {
+                return alert("Veuillez remplir tous les champs du formulaire !!!")
+            }
+            
             let urlAddArticle = "http://localhost:3000/groupomania/articles/add";
             let options = {
                 method: "POST",
@@ -72,14 +83,14 @@ export default {
             .then(response => response.json())
             .then(() => {
                 alert("L'article a été enregistré");
-                //this.$router.push("/home");
-                window.location.reload();
+                window.location.href="/home";
             })
             .catch(error => console.log(error));
         },
     },
 }
 </script>
+
 <style scoped>
   h1{
     font-size: 24px;
@@ -110,4 +121,16 @@ export default {
     color: #122442;
     font-weight: bold;
   }
+/***** RESPONSIVE *****/
+@media (max-width: 335px) {
+    h1{
+      font-size: 20px
+    }
+    .form-control{
+        font-size: 14px !important;
+    }
+    button{
+        font-size: 14px;
+    }
+}
 </style>

@@ -3,19 +3,22 @@
         <div><Navbarre /></div>
         <h1>Mon compte</h1>
             <div class="container">
-                <p><strong>Nom: </strong><span>{{ lastname }}</span></p>
-                <p><strong>Prénom: </strong> {{ firstname }}</p>
-                <p><strong>Email: </strong> {{ email }} </p>
+                <p><strong>Nom: </strong><span> {{ lastname }} </span></p>
+                <p><strong>Prénom: </strong><span> {{ firstname }} </span></p>
+                <p><strong>Email: </strong><span> {{ email }} </span></p>
                 <p>Vous êtes inscrit depuis le <span><strong> {{ formatDate(createdAt) }} </strong></span>.</p>
                 <p>Dernière mise à jour du compte le <span><strong> {{ formatDate(updatedAt) }} </strong></span>.</p>
-                <router-link to="/modifAccount" class="button" role="button"><button><span>Modifier</span></button></router-link>
-                <button @click="deleteAccount"><span>Supprimer</span></button>
+                <div class="buttons">
+                    <button><router-link to="/modifAccount" class="button" role="button"><span>Modifier</span></router-link></button>
+                    <button @click="deleteAccount" class="delete"><span>Supprimer</span></button>
+                </div>
             </div>
     </div>
 </template>
 
 <script>
 import Navbarre from "../components/header/HeaderApp.vue"
+import dayjs from 'dayjs';
 
 export default {
     name: "gestionAccount",
@@ -60,16 +63,10 @@ export default {
             .catch((error) => console.log(error));
     },
     methods: {
-        //Format de la date -> article.createdAt
-        formatDate(date) {
-            return new Date(date).toLocaleDateString("fr-FR", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-            });
+        //Format de la date -> createdAt et updatedAt
+        formatDate(dateString) {
+            const date = dayjs(dateString);
+            return date.format('D/MM/YYYY à hh:mm')
         },
 
         //Suppression du compte
@@ -89,12 +86,16 @@ export default {
                     localStorage.clear();
                     alert("Le compte a été supprimé !!!");
                 })
-                .then(this.$router.push("/signup"))
+                
+                .then(() => {
+                    window.location.href="/signup";
+                })   
                 .catch(error => console.log(error));
         },
     },
 };
 </script>
+
 <style scoped>
     h1{
         font-size: 24px;
@@ -111,12 +112,18 @@ export default {
         margin-bottom: 20px;
     }
     .button{
-        margin-right: 10px
+        text-decoration: none;
+    }
+    .buttons{
+        display: flex;
+    }
+    .buttons span{
+        color: #fff;
     }
     button{
         background: #122442;
         border-radius: 10px;
-        color: #fff;
+        margin-right: 10px;
         text-align: center;
         cursor: pointer;
     }
@@ -127,4 +134,36 @@ export default {
         color: #122442;
         font-weight: bold;
     }
+/***** RESPONSIVE *****/
+@media (max-width: 335px) {
+    h1{
+      font-size: 20px
+    }
+    .container p{
+        font-size: 14px
+    }
+    .buttons{
+        flex-direction: column;
+        justify-content: center;
+    }
+    .buttons span{
+        font-size: 14px;
+    }
+    .delete{
+        margin-top: 10px;
+    }
+}
+@media (max-width: 300px) {
+    h1{
+      font-size: 20px
+    }
+    .container p{
+        font-size: 13px
+    }
+}
+@media (max-width: 265px) {
+    .buttons{
+        display: flex;
+    }
+}
 </style>

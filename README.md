@@ -9,4 +9,6 @@ Installation:
 Cloner le repository: https://github.com/Darkjulius/P7_thibault_brice.git.
 
 Dans le bossier backend:
+1. Remplir le fichier .env.example en fonction de votre base de données et le renommer en .env
+2. Installer Express si besoin
 

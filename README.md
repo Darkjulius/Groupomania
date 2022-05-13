@@ -8,4 +8,5 @@ Prérequis pour installation du projet en local:
 Installation:
 Cloner le repository: https://github.com/Darkjulius/P7_thibault_brice.git.
 
-Dans le bossier #backend
+Dans le bossier backend:
+

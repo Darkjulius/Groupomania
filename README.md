@@ -6,5 +6,5 @@ Prérequis pour installation du projet en local:
 3. Installer Vue.js.
 
 Installation:
-Créer un dossier vide et cloner ce repository à l'intérieur: 
+Créer un dossier vide et cloner ce repository à l'intérieur: https://github.com/Darkjulius/P7_thibault_brice.git.
 

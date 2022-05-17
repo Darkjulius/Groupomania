@@ -15,7 +15,8 @@ exports.createArticle = (req, res, next) => {
     // Création d'un nouvel objet article
     const article = new Article({
         ...articleObject,
-        UserId: req.userId
+        UserId: req.userId,
+        imageURL: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : req.body.imageURL,
     });
     // Enregistrement de l'objet article dans la base de données
     article.save()

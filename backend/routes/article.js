@@ -3,8 +3,9 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/auth-admin");
 const articleCtrl = require("../controllers/article");
+const multer = require("../middleware/multer-config");
 
-router.post("/add", auth, articleCtrl.createArticle);                     //Création d'un post.
+router.post("/add", auth, multer, articleCtrl.createArticle);                     //Création d'un post.
 router.get("/:id", auth, articleCtrl.getOneArticle);                      //Récupération d'un article avec l'id.
 router.get("/", auth, articleCtrl.getAllArticles);                        //Récupération de tous les articles.
 router.put("/:id", auth, articleCtrl.modifyArticle);                      //Modification d'un article via son id.

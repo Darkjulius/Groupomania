@@ -10,6 +10,7 @@
           <div class="article">
             <p><strong>Titre</strong>: {{ article.title }}</p>
             <p><strong>Description</strong>: {{ article.content }}</p>
+            <p><img :src="article.imageURL"> </p>
           </div>
           <div class="center">
             <!-- Si l'utilisateur connecté est Administrateur ou Propriétaire de l'article. Il peut faire une suppression  -->
@@ -111,6 +112,11 @@ export default {
   p{
     margin: 0;
   }
+  img{
+    width: 80%;
+    height: auto;
+    padding-bottom: 20px;
+  }
   button{
     background: #122442;
     border-radius: 10px;
@@ -129,6 +135,9 @@ export default {
 @media (max-width: 535px) {
     p{
       font-size: 14px
+    }
+    img{
+      margin: 0 auto;
     }
     .center{
       display: flex;

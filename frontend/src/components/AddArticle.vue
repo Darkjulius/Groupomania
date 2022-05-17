@@ -2,7 +2,11 @@
     <div id="app">
         <div><Navbarre /></div>
         <h1>Ajoutez un article</h1>
-            <form class="article" method="post">
+            <form 
+            class="article"
+            @submit.prevent="sendArticle()"
+            enctype="multipart/form-data"
+            method="post">
 
                 <div class="form-group">
                     <label for="title"></label>
@@ -11,7 +15,7 @@
                     class="form-control"
                     id="title"
                     required
-                    v-model="inputArticle.title"
+                    v-model="title"
                     name="title"
                     placeholder="Saisir un titre"
                     >
@@ -24,10 +28,21 @@
                     class="form-control"
                     id="content"
                     required
-                    v-model="inputArticle.content"
+                    v-model="content"
                     name="content"
                     placeholder="Saisir le contenu de l'article"
                     ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="image"></label>
+                    <input 
+                    type="file"
+                    class="form-control"
+                    id="image"
+                    ref="image"
+                    @change="selectedFile()"
+                    >
                 </div>
 
                 <button @click="sendArticle"><span>Envoyer</span></button>
@@ -45,10 +60,10 @@ export default {
     },
     data(){
         return{
-            inputArticle: {
-                title: "",
-                content: ""
-            },
+            title: "",
+            content: "",
+            imageURL: "",
+            image: "",
             userId: "",
         };
     },
@@ -57,35 +72,40 @@ export default {
         console.log(this.userId);
     },
     methods: {
+        selectedFile(){
+            this.image = this.$refs.image.files[0];
+            this.imageURL = URL.createObjectURL(this.image);
+        },
         sendArticle() {
-            let data = {
-                title: this.inputArticle.title,
-                content: this.inputArticle.content,
-                userId: this.userId
-            };
-            console.log(data);
-
-            //Contrôle que tous les champs du formulaire d'inscription doivent être remplis.
-            if(data.title == "" || data.content === "") {
-                return alert("Veuillez remplir tous les champs du formulaire !!!")
-            }
+            const formData = new FormData();
+            formData.append("title", document.getElementById("title").value);
+            formData.append("content", document.getElementById("content").value);
+            formData.append("image", this.image);
+            formData.append("userId", this.userId)
+            console.log("test", formData.get("title"));
+            console.log("test", formData.get("content"));
+            console.log("test", formData.get("image"));
+            console.log("test", formData.get("userId"));
             
-            let urlAddArticle = "http://localhost:3000/groupomania/articles/add";
-            let options = {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem("token"),
-                    "Content-Type": "application/json"
-                },
-            };
-            fetch(urlAddArticle, options)
-            .then(response => response.json())
-            .then(() => {
-                alert("L'article a été enregistré");
-                window.location.href="/home";
-            })
-            .catch(error => console.log(error));
+            //Contrôle que tous les champs du formulaire d'inscription doivent être remplis.
+            if(formData.get("title") == "" || formData.get("content") == "") {
+                return alert("Veuillez remplir tous les champs du formulaire !!!")
+            } else {
+                fetch("http://localhost:3000/groupomania/articles/add", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("token"),
+                        // "Content-Type": "multipart/form-data"
+                    }
+                })
+                .then(response => response.json())
+                    .then(() => {
+                        alert("L'article a été enregistré");
+                        window.location.href="/home";
+                    })
+                .catch(error => console.log(error));
+            } 
         },
     },
 }

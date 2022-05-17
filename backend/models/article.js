@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       type: Sequelize.TEXT
     },
+    imageURL: {
+      type: Sequelize.STRING
+    }
   });
   return Article;
 };

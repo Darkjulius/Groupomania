@@ -4,8 +4,6 @@
         <h1>Ajoutez un article</h1>
             <form 
             class="article"
-            @submit.prevent="sendArticle()"
-            enctype="multipart/form-data"
             method="post">
 
                 <div class="form-group">
@@ -96,7 +94,6 @@ export default {
                     body: formData,
                     headers: {
                         "Authorization": "Bearer " + localStorage.getItem("token"),
-                        // "Content-Type": "multipart/form-data"
                     }
                 })
                 .then(response => response.json())

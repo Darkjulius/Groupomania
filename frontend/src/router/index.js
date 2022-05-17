@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import AddArticle from "../components/AddArticle.vue"
 
 const routes = [
   {
@@ -9,7 +10,7 @@ const routes = [
   {
     path: '/add',
     name: 'add',
-    component: () => import('../components/AddArticle')
+    component: AddArticle
   },
   {
     path: '/modifAccount',
